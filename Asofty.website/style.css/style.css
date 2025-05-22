@@ -1,0 +1,136 @@
+/* Estilos gerais para todo o site */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Configuração básica para o corpo e html */
+body, html {
+  width: 100%;
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+/* Estilo para o vídeo de fundo em tela cheia */
+.video-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Garante que o vídeo cubra toda a área sem distorção */
+  z-index: -1; /* Coloca o vídeo atrás de outros elementos */
+}
+
+/* Camada de sobreposição escura para melhorar a legibilidade do conteúdo */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Fundo semi-transparente */
+  z-index: 0;
+}
+
+/* Estilo para o conteúdo principal centralizado */
+.content {
+  position: relative;
+  z-index: 1; /* Coloca o conteúdo acima da sobreposição */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Estilo para títulos principais */
+h1 {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+}
+
+/* Estilo para parágrafos */
+.paragrafo {
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+/* Estilo para botões */
+.btn {
+  display: inline-block;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  color: white;
+  background: #1d2dbb;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: 0.3s; /* Transição suave para efeitos hover */
+}
+
+/* Efeito hover para botões */
+.btn:hover {
+  background: #202020;
+}
+
+/* Efeito hover para parágrafos */
+.paragrafo:hover {
+  letter-spacing: 2px;
+  background: rgb(83, 83, 240);
+  border-radius: 10px;
+  transition: 0.4s;
+}
+
+/* Estilos responsivos para tablets */
+@media (max-width: 1024px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  .paragrafo {
+    font-size: 18px;
+  }
+
+  .btn {
+    font-size: 1rem;
+    padding: 12px 25px;
+  }
+}
+
+/* Estilos responsivos para smartphones */
+@media (max-width: 767px) {
+  .video-bg {
+    object-fit: cover; /* Alterado de contain para cover para melhor visualização em mobile */
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .paragrafo {
+    font-size: 16px;
+    max-width: 95%; /* Limita a largura para melhor leitura */
+  }
+
+  .btn {
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
+  
+  /* Ajustes adicionais para telas muito pequenas */
+  @media (max-width: 480px) {
+    .paragrafo {
+      font-size: 14px;
+    }
+    
+    .btn {
+      padding: 8px 16px;
+      font-size: 0.9rem;
+    }
+  }
+}

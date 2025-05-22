@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <!-- Definição do conjunto de caracteres e configuração de viewport para responsividade -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página inicial</title>
+    <!-- Correção do atributo rel para stylesheet -->
+    <link rel="stylesheet" href="form.css/all.min.css">
+    <link rel="stylesheet" href="form.css/fontawesome.min.css">
+</head>
+<body> 
+    <style>
+        /* Reset de estilos para todos os elementos */
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+       
+        /* Estilos básicos para o corpo da página */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: rgb(240, 240, 236);
+            background-color: #1a5170;
+        }
+
+        /* Estilo para os produtos exibidos */
+        .produto { 
+            border: 1px solid #ddd; 
+            background: #1a5170;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(176, 229, 231, 0.1);
+            padding: 15px; 
+            color: #f6f7fa;
+            width: 220px;
+            transition: transform 0.3s;
+            box-shadow: 2px 2px 3px rgb(241, 236, 236);
+        }
+
+        /* Efeito de escala ao passar o mouse sobre produtos */
+        .produto:hover { 
+            transform: scale(1.05);
+        }
+
+        /* Estilo para imagens dentro dos produtos */
+        .produto img { 
+            width: 100%; 
+            height: auto; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            transition: transform 0.2s ease-in-out;
+        }
+
+        /* Estilo para o modal (janela pop-up) */
+        .modal { 
+            display: none; 
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            background: rgba(250, 249, 249, 0.8); 
+            justify-content: center; 
+            align-items: center;
+            z-index: 10000;
+        }
+
+        /* Estilo para imagens dentro do modal */
+        .modal img { 
+            max-width: 80%; 
+            max-height: 80%;
+            border-radius: 10px; 
+            transition: transform 0.3s ease-in-out; 
+        }
+
+        /* Efeito ao passar o mouse sobre imagens no modal */
+        .modal img:hover { 
+            transform: scale(1.1); 
+        }
+
+        /* Estilo para o botão de fechar o modal */
+        .close { 
+            position: absolute;
+            top: 20px; 
+            right: 30px;
+            font-size: 30px; 
+            color: #000; 
+            cursor: pointer;
+        }
+
+        /* Estilo para o cabeçalho */
+        header {
+            background: #2f4aa3;
+            color: white;
+            height: 40px;
+            padding: 20px;
+            font-size: 24px;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            box-shadow: 2px 2px 3px rgb(241, 236, 236);
+        }
+
+        /* Estilo para o botão de voltar */
+        .btn-voltar {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: #faf7f7;
+            color: rgb(17, 16, 16);
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* Efeito hover para o botão de voltar */
+        .btn-voltar:hover {
+            background: #f5f2f2;
+        }
+
+        /* Estilo para o container principal */
+        .container {
+            display: flex;
+            list-style-type: none;
+            text-align: right;
+            float: right;
+            align-items: center;
+            height: auto; /* Removido height fixo para melhor responsividade */
+        }
+
+        /* Estilo para links dentro do container */
+        .container a {
+            display: flex;
+            margin: 15px;
+            text-decoration: none;
+            font-size: 20px;
+            color: white;
+            align-items: center;
+            text-align: right;
+        }
+
+        /* Estilo para a seção de botões */
+        .buttons {
+            margin-top: 2px;
+            margin: 20px 0;
+        }
+
+        .buttons a {
+            margin-top: -5px;
+        }
+
+        /* Estilo para botões gerais */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            background: #b9b7b6;
+            color: #2f4aa3;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Efeito hover para botões */
+        .btn:hover {
+            background: #181716;
+        }
+
+        /* Estilo para o grid de conteúdo */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 10px;
+        }
+
+        /* Estilo para as caixas dentro do grid */
+        .box {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+            background: rgba(249, 249, 249, 0.9);
+            padding: 15px;
+            text-align: center;
+            color: black;
+        }
+
+        /* Estilo para imagens dentro das caixas */
+        .box img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        /* Estilo para imagens gerais */
+        img {
+            opacity: 1; /* Corrigido de 0,7 para 1 */
+            margin-top: 0;
+        }
+
+        /* Estilo para a seção central */
+        .centro {
+            width: 80%;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Estilo para o corpo da página */
+        .body {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Estilos para o menu dropdown */
+        li .drop {
+            display: inline-block;
+        }
+
+        .contect {
+            display: none;
+        }
+
+        .contect a {
+            display: block;
+        }
+
+        .drop:hover .contect {
+            display: block;
+        }
+        
+        /* Estilo para botão tn */
+        .tn {
+            width: 60px;
+            background: #2f4aa3;
+            cursor: pointer;
+            border-radius: 15px;
+        }
+
+        /* Estilos para links sociais */
+        .socias a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .links a {
+            color: white;
+            text-decoration: none;
+            list-style-type: none;
+        }
+
+        .Sobre a {
+            color: white;
+            text-decoration: none;
+            list-style-type: none;
+        }
+
+        .socias:focus {
+            border: 2px solid green;
+            display: block;
+        }
+
+        .drop a {
+            color: white;
+            text-decoration: none;
+            list-style-type: none;
+        }
+
+        .contect a {
+            margin: 10px;
+            background: rgb(2, 55, 170);
+            border-radius: 10px;
+        }
+
+        .rede {
+            display: flex;
+        }
+
+        .rede a {
+            width: 3px;
+            justify-content: space-between;
+        }
+
+        /* Estilo para o rodapé */
+        .footer {
+            margin-top: 50px;
+        }
+
+        footer {
+            background-color: #2f4aa3;
+            color: white;
+            padding: 20px 0;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin: 10px;
+        }
+
+        .footer-section h3 {
+            border-bottom: 2px solid rgb(70, 68, 68);
+            padding-bottom: 5px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 5px 0;
+        }
+
+        .footer-section ul li a:hover {
+            color: orange;
+        }
+
+        .footer-section p {
+            margin: 5px 0;
+        }
+
+        .social-icons img {
+            width: 24px;
+            margin-right: 10px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #555555;
+        }
+
+        /* Estilos gerais para parágrafos */
+        .paragrafo {
+            font-size: 20px;
+            margin-bottom: 30px;
+            max-width: 90%;
+            word-wrap: break-word;
+        }
+
+        /* Estilos responsivos para smartphones */
+        @media (max-width: 450px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .paragrafo {
+                font-size: 16px;
+                padding: 10px;
+                line-height: 1.4;
+            }
+
+            .btn {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+        }
+
+        /* Estilos responsivos para telas pequenas */
+        @media (max-width: 768px) {
+            nav ul {
+                display: flex;
+                flex-direction: column;
+                background-color: #003366;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                padding: 10px 0;
+                z-index: 10;
+            }
+            
+            /* Ajuste para o layout central em dispositivos móveis */
+            .centro {
+                flex-direction: column;
+                width: 95%;
+            }
+            
+            /* Ajuste para o grid em dispositivos móveis */
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Estilo para o menu desktop */
+        .desktop-menu {
+            color: white;
+            padding: 15px;
+        }
+
+        .desktop-menu ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .desktop-menu li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Menu Mobile (escondido por padrão) */
+        .mobile-menu {
+            display: none;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 30px;
+            padding: 15px;
+            background-color: #2f4aa3;
+            color: white;
+            border: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .mobile-menu li a {
+            display: flex;
+            padding: 15px;
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid #555;
+        }
+
+        /* Mostra o menu mobile e esconde o desktop em telas pequenas */
+        @media (max-width: 768px) {
+            .desktop-menu {
+                display: none;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .mobile-menu {
+                display: none; /* Só aparece quando o botão é clicado */
+            }
+
+            .mobile-menu.active {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cabeçalho com menus de navegação -->
+    <header>
+        <!-- Menu desktop (visível apenas em telas maiores) -->
+        <nav class="desktop-menu">
+            <ul>
+                <li><a href="produto.html">Produto</a></li>
+                <li><a href="Serviço.html">Serviços</a></li>
+                <li><a href="contactos.html">Contato</a></li>
+                <li><a href="informaçao.html">Informações</a></li>
+            </ul>
+        </nav>
+
+        <!-- Botão hambúrguer (visível apenas em dispositivos móveis) -->
+        <button class="hamburger" onclick="toggleMenu()">☰ Menu</button>
+
+        <!-- Menu mobile (inicialmente oculto) -->
+        <nav class="mobile-menu" id="mobileMenu">
+            <ul>
+                <li><a href="produto.html">Produto</a></li>
+                <li><a href="Serviço.html">Serviços</a></li>
+                <li><a href="contactos.html">Contato</a></li>
+                <li><a href="informaçao.html">Informações</a></li>
+            </ul>
+        </nav>
+
+        <!-- Botão de voltar -->
+        <button class="btn-voltar" onclick="history.back()">Voltar</button> 
+    </header> 
+
+    <!-- Conteúdo principal da página -->
+    <div class="body">
+        <div class="centro">
+            <div>
+                <!-- Texto principal destacado -->
+                <p style="font-size: 50pt; display: grid; margin-top: 30%; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;box-shadow: 0px 0px 3px rgb(241, 236, 236)">Transformando ideias em soluções tecnologicas</p>
+            </div>
+            <div>
+                <!-- Imagem principal -->
+                <img style="margin-top: 5%;" src="img_1_1737196271013.jpg" alt="Imagem Asofty">
+            </div>
+        </div>
+    </div>
+
+    <!-- Rodapé da página -->
+    <div class="footer">
+        <footer>
+            <div class="footer-container">
+                <!-- Seção sobre a empresa -->
+                <div class="footer-section">
+                    <h3>AGSOFTY</h3>
+                    <ul>
+                        <li><a href="sobre.html">Sobre Nós</a></li>
+                        <li><a href="Equipe.html">Equipe</a></li>
+                        <li><a href="contactos.html">Contato</a></li>
+                    </ul>
+                </div>
+                <!-- Seção de recursos -->
+                <div class="footer-section">
+                    <h3>Recursos</h3>
+                    <ul>
+                        <li><a href="">Suporte</a></li>
+                        <li><a href="">Documentação</a></li>
+                        <li><a href="termos.htm">Termos e Políticas</a></li>
+                    </ul>
+                </div>
+                <!-- Seção de contato e redes sociais -->
+                <div class="footer-section">
+                    <h3>Contato</h3>
+                    <p>Email: <a href="mailto:contato@agsofty.com">contato@agsofty.com</a></p>
+                    <p>Telefone: <a href="tel:+244947060990">+244 947 060 990</a></p>
+                  
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/CassemeneJR"><img width="24px" src="imagens/facebook.png" alt="Facebook"></a>
+                        <a href="https://www.instagram.com/agsofty_24/"><img width="24px" src="imagens/instagram.png" alt="Instagram"></a>
+                        <a href="https://api.whatsapp.com/send?phone=%2B244947060990"><img width="24px" src="imagens/whatsapp.png" alt="WhatsApp"></a>
+                    </div>
+                </div>
+            </div>
+            <!-- Rodapé inferior com direitos autorais -->
+            <div class="footer-bottom">
+                <p>&copy; 2025 AGSOFTY. Todos os direitos reservados.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Script para controlar o menu mobile -->
+    <script>
+        // Função para alternar a visibilidade do menu mobile
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
